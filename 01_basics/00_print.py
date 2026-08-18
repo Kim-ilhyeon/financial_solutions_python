@@ -62,3 +62,44 @@ height = 175.2
 # Java의 printf()와 비슷한 방식
 print("이름: %s, 나이: %d, 키: %.1f" % (name, age, height))
 
+# .format() 함수를 이용한 포맷팅
+print("이름 : {}, 나이 : {}, 키 : {}".format(name, age, height))
+
+# f-string 방식을 많이 사용 - 간단한 연산도 함께 사용
+print(f"내년에는 나이가 {age+1}세가 됩니다.")
+print(f"이름 : {name}, 나이 : {age}, 키 : {height}")
+
+# f-string 정렬기능도 가능하다
+# {변수:옵션}
+print(f"[{name:<10}]")  # <10 : 10칸을 확보하고 왼쪽 정렬
+print(f"[{name:>10}]")  # >10 : 10칸을 확보하고 오른쪽 정렬
+print(f"[{name:^10}]")  # ^10 : 10칸을 확보하고 중앙 정렬
+
+print("=" * 30)
+print("input : 입력은 항상 문자열로 됨")
+print("=" * 30)
+
+age_text = input("나이를 입력하세요 : ")
+
+print(f"입력값 : {age_text}")
+print(f"입력값의 타입 : {type(age_text)}")
+
+# 입력받은 값으로 계산하려면 형변환이 필요
+age = int(age_text)
+print(f"내년 나이 : {age + 1}")
+
+# 1) 이름과 나이를 입력받아 한 줄로 소개문장을 출력
+
+name = input("이름을 입력하세요 : ")
+age = input("나이를 입력하세요 : ")
+
+print(f"안녕하세요. {name}이고, 나이는 {age}살 입니다.")
+
+print("=" * 10)
+# 2) 숫자 두 개를 입력받아, 합,차,몫,나머지를 출력
+
+num1 = int(input("숫자1 입력 : "))
+num2 = int(input("숫자2 입력 : "))
+
+print(f"합 : {num1 + num2} \n차 : {num1 - num2} \n몫 : {num1 // num2} \n나머지 : {num1 % num2}")
+# Python에서 몫 구할 때는 // 사용
