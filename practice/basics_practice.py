@@ -182,7 +182,7 @@ while True:
 
         # TODO: while 반복문으로 게임 구현
         while True:
-            input_answer = int(input("정답 : ").split())
+            input_answer = int(input("정답 : ").strip())
             tries += 1
             if input_answer == answer:
                 break
