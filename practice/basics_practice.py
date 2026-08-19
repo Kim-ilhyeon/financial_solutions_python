@@ -39,13 +39,13 @@ while True:
         birth_year = int(input("출생연도를 입력하시오 : "))
 
         # TODO: 만 나이 계산
-        exact_age = 2026 - birth_year
+        exact_age = BASE_YEAR - birth_year
 
         # TODO: 삼항 연산으로 성인 여부 판정 (19세 이상이면 성인)
         is_adult = "성인" if exact_age >= 19 else "미성년자"
 
         # TODO: f-string으로 결과 출력
-        print(f"{birth_year}년생은 2026년 기준 {exact_age}세, {is_adult}입니다.")
+        print(f"{birth_year}년생은 {BASE_YEAR}년 기준 만 {exact_age}세, {is_adult}입니다.")
 
     # =====================================================================
     # PRACTICE 2. 가격 문자열 정제
