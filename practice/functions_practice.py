@@ -19,11 +19,19 @@
 # =========================================================================
 def analyze_text(text: str) -> tuple:
     # TODO: docstring 작성 (Args / Returns)
+    """
+    문장의 글자 수와 단어 수를 계산하는 함수
+    """
 
     # TODO: 공백만 있는 경우 처리
+    if not text.strip():
+        return 0, 0, 0
 
     # TODO: 세 값을 계산해 튜플로 반환
-    pass
+    total_chars = len(text)
+    no_space = len(text.replace(" ", ""))
+    word_leng = len(text.split()) 
+    return total_chars, no_space, word_leng
 
 
 # =========================================================================
@@ -42,9 +50,12 @@ def analyze_text(text: str) -> tuple:
 def make_url(host: str, path: str = "/", protocol: str = "https", port: int | None = None) -> str:
     """호스트 정보로 URL 문자열을 만들어 반환한다."""
     # TODO: path 앞에 "/" 보정
+    path = path if path.startswith("/") else "/" + path
 
     # TODO: port 유무에 따라 URL 조립 후 반환
-    pass
+    port = "" if port == None else port
+    url = protocol, "://", host, ":", port, path
+    return url
 
 
 # =========================================================================
@@ -65,9 +76,10 @@ def make_url(host: str, path: str = "/", protocol: str = "https", port: int | No
 def join_path(*parts: str) -> str:
     """경로 조각들을 "/" 로 이어 붙여 반환한다."""
     # TODO: 빈 리스트를 만들고, 쓸 조각만 골라 담기
+    refine_parts = list(filter(lambda p : p.strip() , parts))
 
     # TODO: "/" 로 합쳐서 반환
-    pass
+    return "/".join(refine_parts)
 
 
 # =========================================================================
@@ -89,11 +101,16 @@ def join_path(*parts: str) -> str:
 def build_profile(name: str, **extra) -> None:
     """이름과 임의의 추가 정보를 받아 프로필을 출력한다."""
     # TODO: 이름 줄 출력
+    print(f"[{name}]")
 
     # TODO: 추가 정보가 없으면 안내 문구 출력 후 종료
+    if extra is None:
+        print(f"(추가 정보 없음)")
+        return
 
     # TODO: items() 로 순회하며 한 줄씩 출력
-    pass
+    for key, value in extra.items():
+        print(f"{key}: {value}")
 
 
 # =========================================================================
@@ -113,9 +130,11 @@ def unsafe_append(items: list, value) -> None:
 def safe_append(items: list, value) -> list:
     """원본을 바꾸지 않고 value 가 추가된 새 리스트를 반환한다."""
     # TODO: 새 리스트에 기존 값 복사
+    copy_items = list(map(lambda s : s, items))
 
     # TODO: 새 값 추가 후 반환
-    pass
+    copy_items.append(value)
+    return copy_items
 
 
 # =========================================================================
@@ -135,7 +154,8 @@ total = 0    # 전역 변수
 def add_global(n: int) -> None:
     """전역 변수 total 을 n 만큼 증가시킨다."""
     # TODO: global 선언 후 total 증가
-    pass
+    global total
+    total += n
 
 
 def add_safe(current: int, n: int) -> int:
@@ -157,7 +177,8 @@ def add_safe(current: int, n: int) -> int:
 def sort_products(products: list[dict]) -> list[dict]:
     """카테고리 오름차순, 가격 내림차순으로 정렬한 새 리스트를 반환한다."""
     # TODO: sorted 와 lambda 로 한 줄 작성
-    pass
+    for p in sorted(products, key=lambda s : s["category"] (s["price"], reversed=True)):
+        refined_products = p
 
 
 # =========================================================================
