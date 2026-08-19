@@ -107,8 +107,10 @@ while True:
                 grade = "D"
             else:
                 grade = "F"
+            print(f"당신의 학점은 {grade}입니다.")
+        else : 
+            print(f"잘못된 입력")
         # TODO: 범위 검사 후 학점 판정
-        print(f"당신의 학점은 {grade}입니다.")
 
     # =====================================================================
     # PRACTICE 4. 별 찍기
@@ -126,13 +128,16 @@ while True:
 
         # TODO: n 입력받기
         n = int(input("숫자 입력 : "))
+        # 공백 : n - 1
+        # 별 갯수 : i * 2 - 1 (1, 3, 5, 7...)
         width = 2 * n - 1
 
         # TODO: 반복문으로 삼각형 출력
         for i in range(1, n+1):
             stars = "*" * (2*i-1)
             print(f"{stars :^{width}}")
-        pass
+
+        # 문자열 * 정수는 반복의 개념이다. -> 다른 언어였다면 반복문을 사용해서 찍어줘야 한다.
 
     # =====================================================================
     # PRACTICE 5. 종목별 등락 출력
@@ -158,7 +163,7 @@ while True:
             else:
                 diff = "보합"
 
-            print(f"{i}. {name}: {now} ({diff})")
+            print(f"{i}. {name}: {now:,}원 ({diff})")
 
 
     # =====================================================================
@@ -177,10 +182,15 @@ while True:
 
         # TODO: while 반복문으로 게임 구현
         while True:
-            input_answer = int(input("정답 : "))
+            input_answer = int(input("정답 : ").split())
             tries += 1
             if input_answer == answer:
                 break
+            elif input_answer > answer:
+                print("더 작은 수를 입력하세요.")
+            elif input_answer < answer:
+                print("더 큰 수를 입력하세요.")
+
 
         print(f"정답입니다.\n시도 횟수는 {tries}번입니다.")
 
