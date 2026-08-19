@@ -50,12 +50,14 @@ def analyze_text(text: str) -> tuple:
 def make_url(host: str, path: str = "/", protocol: str = "https", port: int | None = None) -> str:
     """호스트 정보로 URL 문자열을 만들어 반환한다."""
     # TODO: path 앞에 "/" 보정
-    path = path if path.startswith("/") else "/" + path
+    if not path.startswith("/"):
+        path = "/" + path
 
     # TODO: port 유무에 따라 URL 조립 후 반환
-    port = "" if port == None else port
-    url = protocol, "://", host, ":", port, path
-    return url
+    if port is None:
+        return f"{protocol}://{host}{path}"
+
+    return f"{protocol}://{host}:{port}{path}"
 
 
 # =========================================================================
@@ -76,10 +78,15 @@ def make_url(host: str, path: str = "/", protocol: str = "https", port: int | No
 def join_path(*parts: str) -> str:
     """경로 조각들을 "/" 로 이어 붙여 반환한다."""
     # TODO: 빈 리스트를 만들고, 쓸 조각만 골라 담기
-    refine_parts = list(filter(lambda p : p.strip() , parts))
+    usable = []
+
+    for part in parts:
+        p = part.strip()
+        if p:           # ""과 " " 전부 걸러짐
+            usable.append(p)
 
     # TODO: "/" 로 합쳐서 반환
-    return "/".join(refine_parts)
+    return "/".join(usable)
 
 
 # =========================================================================
@@ -110,7 +117,7 @@ def build_profile(name: str, **extra) -> None:
 
     # TODO: items() 로 순회하며 한 줄씩 출력
     for key, value in extra.items():
-        print(f"{key}: {value}")
+        print(f" {key}: {value}")
 
 
 # =========================================================================
@@ -161,7 +168,7 @@ def add_global(n: int) -> None:
 def add_safe(current: int, n: int) -> int:
     """current 에 n 을 더한 결과를 반환한다. 전역 변수는 건드리지 않는다."""
     # TODO: 더한 값을 반환
-    pass
+    return current + n
 
 
 # =========================================================================
@@ -177,8 +184,10 @@ def add_safe(current: int, n: int) -> int:
 def sort_products(products: list[dict]) -> list[dict]:
     """카테고리 오름차순, 가격 내림차순으로 정렬한 새 리스트를 반환한다."""
     # TODO: sorted 와 lambda 로 한 줄 작성
-    for p in sorted(products, key=lambda s : s["category"] (s["price"], reversed=True)):
-        refined_products = p
+    array_product = sorted(products, key=lambda p : (p["category"], -p["price"]))
+    # => 비교 값이 숫자인 경우 내림차순은 -로 가능
+
+    return array_product
 
 
 # =========================================================================
@@ -199,11 +208,14 @@ def sort_products(products: list[dict]) -> list[dict]:
 def analyze_temps(temps: list[float]) -> tuple:
     """섭씨 리스트를 받아 (화씨 리스트, 영하 리스트, 모두 영상인가) 를 반환한다."""
     # TODO: ① map 으로 화씨 변환
+    fahrenheit = list(map(lambda c : round(c * 9 / 5 + 32, 1), temps))
 
     # TODO: ② filter 로 영하만 추출
+    zero = list(filter(lambda c : c < 0, temps))
 
     # TODO: ③ all 로 전체 영상 여부 판정 후 튜플 반환
-    pass
+    all_zero = all(c > 0 for c in temps)
+    return fahrenheit, zero, all_zero
 
 
 # =========================================================================
