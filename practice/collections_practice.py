@@ -24,10 +24,12 @@ import copy
 def top_n_by_price(stocks: list[dict], n: int = 3) -> list[str]:
     """가격 상위 n개 종목의 이름 리스트를 반환한다. 원본은 바뀌지 않는다."""
     # TODO: 가격 내림차순으로 정렬한 새 리스트 만들기
+    ordered_stocks = sorted(stocks, key=lambda s : -s.get('price', 0))
 
     # TODO: 앞에서 n개만 자르고, 이름만 모아서 반환
-    pass
+    ordered_stocks = ordered_stocks[:n]
 
+    return [s.get('name', "이름 없음") for s in ordered_stocks]
 
 # =========================================================================
 # PRACTICE 2. 2차원 리스트                       [05_list]
@@ -45,11 +47,21 @@ def top_n_by_price(stocks: list[dict], n: int = 3) -> list[str]:
 def column_sums(matrix: list[list[int]]) -> list[int]:
     """2차원 리스트의 열별 합계 리스트를 반환한다."""
     # TODO: 빈 행렬 처리
+    if not matrix:
+        return []
 
     # TODO: 0으로 채운 합계 리스트 만들기
+    # => 열 갯수만큼 0으로 채운 리스트 생성
+    # [0] * n을하면 0으로 채워진 n개짜리 리스트가 생성됨
+    sums = [0] * len(matrix[0])
+    # sums = [0 for _ in range(len(martrix[0]))]
 
     # TODO: 행을 돌면서 각 열에 더한 뒤 반환
-    pass
+    for m in matrix:
+        for i in range(len(m)):
+            sums[i] += m[i]
+
+    return sums
 
 
 # =========================================================================
@@ -70,12 +82,23 @@ def column_sums(matrix: list[list[int]]) -> list[int]:
 # =========================================================================
 def parse_record(line: str) -> tuple | None:
     """CSV 한 줄을 (코드, 이름, 가격) 튜플로 반환한다. 형식이 틀리면 None."""
+    # 005930, 삼성전자, 71200
     # TODO: 콤마로 나누고 필드 개수 확인
+    fields = line.split(",")
+    if len(fields) != 3:
+        return None
+    code, name, price = fields
 
     # TODO: 언패킹 후 공백 제거
+    code = code.strip()
+    name = name.strip()
+    price = price.strip()
 
     # TODO: 가격이 숫자인지 검사하고 튜플로 반환
-    pass
+    if price.isdigit():
+        return None
+
+    return code, name, int(price)
 
 
 # =========================================================================
@@ -96,6 +119,12 @@ def parse_record(line: str) -> tuple | None:
 def total_by_name(trades: list[dict]) -> dict:
     """종목명별 금액 합계 딕셔너리를 반환한다."""
     # TODO: 빈 딕셔너리에서 시작해 get(name, 0) 패턴으로 누적
+    result = {}
+
+    for trade in trades:
+        name = trade.get('name', '이름없음')
+        amount = trade.get('amount', 0)
+        result[name] = 
     pass
 
 
