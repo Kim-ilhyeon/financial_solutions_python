@@ -6,6 +6,7 @@ import numpy as np
 
 # __file__는 지금 현재 파일의 경로(_data.py)
 CSV_PATH = Path(__file__).with_name("prices.csv")
+N_DAYS = 750    # 거래일 수
 
 _COLUMNS = {
     "code": 0,
