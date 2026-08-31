@@ -25,7 +25,26 @@ def load_companies(raw=False):
         )
     return pd.read_csv(path("companies.csv"), encoding=ENCODING)
 
+def load_sectors():
+    """ 종목 섹터데이터(10행) """
+    return pd.read_csv(path("sectors.csv"), encoding=ENCODING)
+
+def load_financial():
+    """ 분기 재무 데이터 종목(120)당 12분기 = 1440행 """
+    return pd.read_csv(path("financial.csv"), encoding=ENCODING)
 
 
+def load_merged():
+    prices = load_prices()
+    companies = load_companies()
+    sectors = load_sectors().rename(columns={"code": "sectorCode", "name": "sector"})
+    full = (
+        prices
+        .merge(companies[["code", "name", "sectorCode", "market"]]
+               , on="code", how="left", validate="many_to_one")
+        # sectors의 code/name은 companies의 code/name과 겹친다.
+        .merge(sectors[["sectorCode", "sector"]]
+               , on="sectorCode", how="left", validate="many_to_one")
+    )
 
-
+    return full.sort_values(["code", "date"]).reset_index(drop=True)
