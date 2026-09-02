@@ -1,0 +1,141 @@
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Java / Spring Boot
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+target/
+build/
+out/
+bin/
+
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Spring Boot
+spring.log
+
+# Local config / secrets
+application-local.properties
+application-local.yml
+application-secret.properties
+application-secret.yml
+.env
+.env.*
+!.env.example
+
+# =========================
+# Eclipse
+# =========================
+.metadata/
+.project
+.classpath
+.settings/
+.loadpath
+.factorypath
+
+# =========================
+# VS Code
+# =========================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# =========================
+# React / Node
+# =========================
+node_modules/
+dist/
+coverage/
+
+# React build
+/build/
+
+# Vite
+.vite/
+
+# Next.js
+.next/
+out/
+
+# Package managers
+.pnpm-store/
+.yarn/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# =========================
+# Test / temp files
+# =========================
+*.tmp
+*.temp
+*.swp
+*.bak
+*.orig
+
+# =========================
+# Database / local storage
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+
+# 가상환경 (Virtual Environments)
+.venv/
+venv/
+env/
+ENV/
+
+# 파이썬 캐시 파일 (Byte-compiled / optimized / DLL files)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 환경변수 / 비밀키 파일 (보안 유지 필수)
+.env
+.env.*
+*.pem
+
+# 패키징 및 빌드 결과물 (Distribution / packaging)
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+*.egg
