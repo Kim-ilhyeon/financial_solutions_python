@@ -48,7 +48,6 @@ def add_features(df, shift_features=True):
     피처를 만든다.
 
     shift_features 인자가 이 파일의 핵심이다.
-
       True  : 모든 피처를 한 칸 민다. "어제까지의 정보로 오늘을 예측"
       False : 밀지 않는다. 오늘 종가로 만든 피처가 들어간다 -> 데이터 누수
 
@@ -72,42 +71,44 @@ def add_features(df, shift_features=True):
 
     return df
 
-
 def add_target(df):
     """
         정답을 만든다.
 
         예측하는 대상은 오늘의 수익률.
-
         - target_ret = 오늘종가 / 어제종가 - 1
-        - target_up = 올랐는지(0/1)
+        - target_up = 올랐냐?(0/1)
 
         왜 오늘의 수익률인가?
-        "오는ㄹ 장이 끝나기 저에, 오늘 오를지 예측"
+        "오늘 장이 끝나기 전에, 오늘 오를지 예측"
 
         이때 오늘 종가를 아직 알 수 없다.
-        그래서 feature는 어제까지의 정보여야한다.
-
-        shift(1)를 빼면 오늘 종가가 피처에 섞여서 누수가 된다.
+        그래서 피처는 어제까지의 정보여야한다.
+        -> shift(1)를 빼면 오늘 종가가 피처에 섞여서 누수가 된다.
     """
-    df = df.sort_values(["code", "date"].copy())
-    df["target_ret"] = df.groupby("codle")["closE"].pct_change()
+    df = df.sort_values(["code", "date"]).copy()
+    df["target_ret"] = df.groupby("code")["close"].pct_change()
     df["target_up"] = (df["target_ret"] > 0).astype("int8")
     return df
 
-
 def build_dataset(shift_features=True):
-    """ 피처와 정답이 준비된 데이터를 돌려준다. """
+    """피처와 정답이 준비된 데이터를 돌려준다."""
     df = load_merged()
     df = add_features(df, shift_features=shift_features)
     df = add_target(df)
 
-    # 피처나 정답이 비어있는 행은 학습에 사용이 어렵다.
+    # 피처나 정답이 비어있는 행은 학습에 사용이 어렵다
     df = df.dropna(subset=FEATURES + ["target_ret"]).reset_index(drop=True)
 
-    # 지정한 특성의 (FEATURES)의 열들이 유효하지 않으면 유효하지 않은 값(무한대, 결측치)가 될 수 있다. -> 유효하지 않은 값(무한대, 결측치)을 정리한다.
-
+    # 지정한 특성(FEATURES)의 열들이 유효하지 않은 값(무한대, 결측치)을 정리한다.
     df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=FEATURES).reset_index(drop=True)
 
     return df
 
+def time_split(df, test_ratio=0.2):
+    """ 시계열은 랜덤 분할하면 안됨 """
+
+    cutoff = df["date"].quantile(1 - test_ratio)
+    train = df[df["date"] <= cutoff].reset_index(drop=True)
+    test = df[df["date"] > cutoff].reset_index(drop=True)
+    return train, test, cutoff
